@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShyrChain - Kyrgyz Heritage NFTs</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.13.1/ethers.umd.min.js"></script>
+
+</head>
+<body>
+    
+    <header class="header"> 
+        <img class="yurt-logo" src="logo.png" alt="Yurt Logo"> 
+        <ul class="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="explore.html">Explore</a></li>
+            <li><a href="about.html">About</a></li>
+        </ul>
+        <button class="button-connect" id="connectButton">Connect Wallet</button>
+    </header>
+
+    <section class="hero-section"> 
+        <h1 class="hero-section-txt">Kyrgyz Heritage <br> on Blockchain <br>
+            Discover, Own & Preserve <br>
+            National Art as NFTs
+        </h1>
+        <img class="shyrdak" src="shyrdak2.png" alt="Фото Шырдака">
+    </section>
+
+    <h1 class="popular">Popular NFTs</h1>
+
+    <section class="popular-nft-section">
+
+        <div class="nft-div">
+            <img id="kalpak" src="tovary/kalpal.jpg" alt="Kalpak"> 
+            <div class="nft-content">
+                <p class="nft-name">Kalpak</p>
+                <p class="nft-text">National Kyrgyz headdress. Symbol of the mountains.</p>
+                
+                <div class="purchase-module">
+                    <div class="info-box">
+                        <h3 class="price-eth" data-token-id="1">Price: ... ETH / share</h3> 
+                        <h3 class="shares-left" id="sharesLeft_1">... / ... shares available</h3>
+                    </div>
+                    <div class="buy-controls">
+                        <input id="buyAmount_1" type="number" min="1" value="1" />
+                        <button class="buy-button" id="buyButton_1" data-token-id="1" disabled>Buy Share(s)</button>
+                    </div>
+                    <p class="feedback" id="feedback_1"><i>Connect wallet first.</i></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="nft-div">
+            <img id="tebetey" src="tovary/tebetey.png" alt="Tebetey"> 
+            <div class="nft-content">
+                <p class="nft-name">Tebetey</p>
+                <p class="nft-text">Traditional winter hat with fur trimming.</p>
+
+                 <div class="purchase-module">
+                    <div class="info-box">
+                        <h3 class="price-eth" data-token-id="2">Price: ... ETH / share</h3> 
+                        <h3 class="shares-left" id="sharesLeft_2">... / ... shares available</h3>
+                    </div>
+                    <div class="buy-controls">
+                        <input id="buyAmount_2" type="number" min="1" value="1" />
+                        <button class="buy-button" id="buyButton_2" data-token-id="2" disabled>Buy Share(s)</button>
+                    </div>
+                    <p class="feedback" id="feedback_2"><i>Connect wallet first.</i></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="nft-div"> 
+            <img src="tovary/shyrdak.jpg" alt="Shyrdak"> 
+            <div class="nft-content">
+                <p class="nft-name">Shyrdak 'Ala-Too'</p>
+                <p class="nft-text">Traditional felt carpet with ornament patterns.</p>
+
+                <div class="purchase-module">
+                    <div class="info-box">
+                        <h3 class="price-eth" data-token-id="3">Price: ... ETH / share</h3> 
+                        <h3 class="shares-left" id="sharesLeft_3">... / ... shares available</h3>
+                    </div>
+                    <div class="buy-controls">
+                        <input id="buyAmount_3" type="number" min="1" value="1" />
+                        <button class="buy-button" id="buyButton_3" data-token-id="3" disabled>Buy Share(s)</button>
+                    </div>
+                    <p class="feedback" id="feedback_3"><i>Connect wallet first.</i></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="nft-div"> 
+            <img src="tovary/komuz.jpg" alt="Komuz"> 
+            <div class="nft-content">
+                <p class="nft-name">Komuz</p>
+                <p class="nft-text">National three-stringed musical instrument.</p>
+
+                <div class="purchase-module">
+                    <div class="info-box">
+                        <h3 class="price-eth" data-token-id="4">Price: ... ETH / share</h3> 
+                        <h3 class="shares-left" id="sharesLeft_4">... / ... shares available</h3>
+                    </div>
+                    <div class="buy-controls">
+                        <input id="buyAmount_4" type="number" min="1" value="1" />
+                        <button class="buy-button" id="buyButton_4" data-token-id="4" disabled>Buy Share(s)</button>
+                    </div>
+                    <p class="feedback" id="feedback_4"><i>Connect wallet first.</i></p>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    
+    <br><br><br><h3 class="footer-text">Our project preserves Kyrgyz art, Turning national products into unique
+        digital NFTs
+    </h3>
+       <p class="copyright">© 2025 BozNFT. All rights reserved.</p>
+    
+    <script>
+        // ==================================================================
+        // !!! ВСТАВЬ СЮДА СВОИ ПОСЛЕДНИЕ CONTRACT_ADDRESS и ABI !!!
+        // (От ОБЫЧНОЙ Sepolia)
+        // ==================================================================
+        const CONTRACT_ADDRESS = "0x1e4509DA60A95fb64C5D20eF395ff528EAa99E9c"; 
+
+        const contractABI = [
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "buyFraction",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "balance",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "needed",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "ERC1155InsufficientBalance",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "approver",
+				"type": "address"
+			}
+		],
+		"name": "ERC1155InvalidApprover",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "idsLength",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "valuesLength",
+				"type": "uint256"
+			}
+		],
+		"name": "ERC1155InvalidArrayLength",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			}
+		],
+		"name": "ERC1155InvalidOperator",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "receiver",
+				"type": "address"
+			}
+		],
+		"name": "ERC1155InvalidReceiver",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "sender",
+				"type": "address"
+			}
+		],
+		"name": "ERC1155InvalidSender",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			}
+		],
+		"name": "ERC1155MissingApprovalForAll",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bytes",
+				"name": "",
+				"type": "bytes"
+			}
+		],
+		"name": "onERC1155BatchReceived",
+		"outputs": [
+			{
+				"internalType": "bytes4",
+				"name": "",
+				"type": "bytes4"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "",
+				"type": "bytes"
+			}
+		],
+		"name": "onERC1155Received",
+		"outputs": [
+			{
+				"internalType": "bytes4",
+				"name": "",
+				"type": "bytes4"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			}
+		],
+		"name": "OwnableInvalidOwner",
+		"type": "error"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			}
+		],
+		"name": "OwnableUnauthorizedAccount",
+		"type": "error"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
+			}
+		],
+		"name": "ApprovalForAll",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "previousOwner",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "OwnershipTransferred",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalFractions",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pricePerFraction",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "artisanWallet",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "newTokenURI",
+				"type": "string"
+			}
+		],
+		"name": "registerMasterpiece",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "ids",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "values",
+				"type": "uint256[]"
+			},
+			{
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			}
+		],
+		"name": "safeBatchTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bytes",
+				"name": "data",
+				"type": "bytes"
+			}
+		],
+		"name": "safeTransferFrom",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "approved",
+				"type": "bool"
+			}
+		],
+		"name": "setApprovalForAll",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256[]",
+				"name": "ids",
+				"type": "uint256[]"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256[]",
+				"name": "values",
+				"type": "uint256[]"
+			}
+		],
+		"name": "TransferBatch",
+		"type": "event"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "value",
+				"type": "uint256"
+			}
+		],
+		"name": "TransferSingle",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "value",
+				"type": "string"
+			},
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "URI",
+		"type": "event"
+	},
+	{
+		"inputs": [],
+		"name": "withdrawETH",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			}
+		],
+		"name": "balanceOf",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address[]",
+				"name": "accounts",
+				"type": "address[]"
+			},
+			{
+				"internalType": "uint256[]",
+				"name": "ids",
+				"type": "uint256[]"
+			}
+		],
+		"name": "balanceOfBatch",
+		"outputs": [
+			{
+				"internalType": "uint256[]",
+				"name": "",
+				"type": "uint256[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "getFractionsAvailable",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "account",
+				"type": "address"
+			},
+			{
+				"internalType": "address",
+				"name": "operator",
+				"type": "address"
+			}
+		],
+		"name": "isApprovedForAll",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "masterpieces",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "artisanWallet",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "pricePerFraction",
+				"type": "uint256"
+			},
+			{
+				"internalType": "uint256",
+				"name": "totalFractions",
+				"type": "uint256"
+			},
+			{
+				"internalType": "bool",
+				"name": "exists",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "owner",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes4",
+				"name": "interfaceId",
+				"type": "bytes4"
+			}
+		],
+		"name": "supportsInterface",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "tokenURIs",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "tokenId",
+				"type": "uint256"
+			}
+		],
+		"name": "uri",
+		"outputs": [
+			{
+				"internalType": "string",
+				"name": "",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	}
+]
+            // ВСТАВЬ СЮДА СВОЙ ПОСЛЕДНИЙ РАБОЧИЙ ABI
+            // Он должен начинаться с [ ... ]
+        ;
+        // ==================================================================
+
+
+        // --- Описываем наши 4 товара ---
+        // Убедись, что цены здесь СООТВЕТСТВУЮТ ценам, установленным в Remix!
+        const items = [
+            { id: 1, name: "Kalpak", priceEth: "0.0055", totalShares: 100, sharesLabelId: "sharesLeft_1", feedbackLabelId: "feedback_1", buyButtonId: "buyButton_1", amountInputId: "buyAmount_1", priceLabelSelector: `.price-eth[data-token-id="1"]` },
+            { id: 2, name: "Tebetey", priceEth: "0.008",  totalShares: 100, sharesLabelId: "sharesLeft_2", feedbackLabelId: "feedback_2", buyButtonId: "buyButton_2", amountInputId: "buyAmount_2", priceLabelSelector: `.price-eth[data-token-id="2"]` },
+            { id: 3, name: "Shyrdak", priceEth: "0.01",   totalShares: 100, sharesLabelId: "sharesLeft_3", feedbackLabelId: "feedback_3", buyButtonId: "buyButton_3", amountInputId: "buyAmount_3", priceLabelSelector: `.price-eth[data-token-id="3"]` },
+            { id: 4, name: "Komuz", priceEth: "0.03",   totalShares: 100, sharesLabelId: "sharesLeft_4", feedbackLabelId: "feedback_4", buyButtonId: "buyButton_4", amountInputId: "buyAmount_4", priceLabelSelector: `.price-eth[data-token-id="4"]` },
+        ];
+
+        // --- Переменные для работы ---
+        let provider;
+        let signer;
+        let contract;
+        let isConnected = false;
+        let signerAddress = null; 
+
+        // --- Связываем элементы HTML с JavaScript ---
+        const connectButton = document.getElementById('connectButton');
+        const buyButtons = document.querySelectorAll('.buy-button'); 
+
+        // --- Логика ---
+
+        // Запускается после загрузки HTML
+        document.addEventListener('DOMContentLoaded', async () => {
+             updateAllPriceLabels(); 
+             
+             if (typeof window.ethereum !== 'undefined') {
+                try {
+                    const tempProvider = new ethers.BrowserProvider(window.ethereum); 
+                    const accounts = await tempProvider.listAccounts(); 
+                    if (accounts && accounts.length > 0 && accounts[0]) { // Добавлена проверка accounts[0]
+                        signerAddress = accounts[0]; // Получаем адрес сразу
+                        await initializeApp(); 
+                    } else {
+                        setFeedbackForAll("Connect your wallet to start."); 
+                        updateButtonStatus(); 
+                    }
+                } catch (err) {
+                    console.error("Failed to check pre-connection:", err);
+                    setFeedbackForAll("Error checking wallet status.");
+                    updateButtonStatus(); 
+                }
+            } else {
+                 setFeedbackForAll("Please install MetaMask.");
+                 updateButtonStatus(); 
+            }
+
+            if (connectButton) {
+                connectButton.addEventListener('click', connectWallet);
+            }
+            
+             buyButtons.forEach(button => {
+                button.addEventListener('click', handleBuy);
+            });
+        });
+
+        // Функция для обновления статуса кнопки Connect
+        function updateButtonStatus() {
+            if (!connectButton) return;
+            if (isConnected && signerAddress) {
+                connectButton.textContent = `Connected: ${signerAddress.substring(0, 6)}...${signerAddress.substring(signerAddress.length - 4)}`;
+                connectButton.classList.add('connected-state');
+                connectButton.disabled = true;
+            } else {
+                connectButton.textContent = 'Connect Wallet';
+                connectButton.classList.remove('connected-state');
+                connectButton.disabled = false;
+            }
+        }
+
+        // --- !!! ВОТ ФУНКЦИЯ initializeApp !!! ---
+        // Функция для инициализации после подключения
+        async function initializeApp() {
+             try {
+                if (!provider) {
+                     provider = new ethers.BrowserProvider(window.ethereum);
+                }
+                signer = await provider.getSigner();
+                signerAddress = await signer.getAddress(); 
+                isConnected = true; 
+                
+                updateButtonStatus(); 
+
+                contract = new ethers.Contract(CONTRACT_ADDRESS, contractABI, provider);
+                
+                buyButtons.forEach(button => {
+                     if (button.id !== 'connectButton') { 
+                         button.disabled = false;
+                     }
+                 });
+                
+                await fetchAllSharesLeft(); 
+
+             } catch (err) {
+                 console.error("Initialization failed:", err);
+                 isConnected = false;
+                 signerAddress = null;
+                 setFeedbackForAll("Failed to initialize app.");
+                 updateButtonStatus(); 
+             }
+        } // --- !!! КОНЕЦ ФУНКЦИИ initializeApp !!! ---
+
+
+        // 1. Подключение кошелька (вызывается кнопкой)
+        async function connectWallet() {
+            if (isConnected) return; 
+            
+            if (typeof window.ethereum === 'undefined') {
+                setFeedbackForAll("Please install MetaMask!");
+                return; 
+            }
+            try {
+                setFeedbackForAll("Connecting...");
+                connectButton.textContent = 'Connecting...'; 
+                connectButton.disabled = true; 
+
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
+                
+                await initializeApp(); 
+                
+            } catch (err) {
+                console.error("Connection error:", err);
+                isConnected = false;
+                signerAddress = null;
+                 if (err.code === 4001) { 
+                     setFeedbackForAll("Connection rejected. Please connect wallet.");
+                } else {
+                     setFeedbackForAll("Failed to connect wallet.");
+                }
+                 updateButtonStatus(); 
+            }
+        } // Конец функции connectWallet
+
+        // 2. Получение данных для ВСЕХ товаров
+        async function fetchAllSharesLeft() {
+            if (!contract || !isConnected) {
+                console.log("Cannot fetch shares: contract or connection missing.");
+                setFeedbackForAll("Connect wallet to load data."); 
+                return; 
+            }
+            setFeedbackForAll("Fetching available shares...");
+
+            const promises = items.map(item => 
+                contract.getFractionsAvailable(item.id)
+                    .then(available => ({ id: item.id, available: Number(available) }))
+                    .catch(err => {
+                         console.error(`Error fetching shares for ID ${item.id}:`, err);
+                         return { id: item.id, available: 'Error', error: true }; 
+                    })
+            );
+
+            try {
+                const results = await Promise.all(promises);
+
+                results.forEach(result => {
+                    const item = items.find(i => i.id === result.id);
+                    if (item) {
+                        const sharesLabel = document.getElementById(item.sharesLabelId);
+                        if (sharesLabel) {
+                            if (result.error) {
+                                sharesLabel.innerText = `Error loading`;
+                            } else {
+                                sharesLabel.innerText = `${result.available} / ${item.totalShares} shares available`;
+                            }
+                        }
+                    }
+                });
+                setFeedbackForAll("Data loaded. Ready to buy."); 
+            } catch (error) {
+                 console.error("Error processing share results:", error);
+                 setFeedbackForAll("Error loading share data.");
+            }
+        } // Конец функции fetchAllSharesLeft
+
+        // Обновляем цены в HTML из массива items
+        function updateAllPriceLabels() {
+            items.forEach(item => {
+                const priceLabel = document.querySelector(item.priceLabelSelector);
+                if (priceLabel) {
+                     priceLabel.innerText = `Price: ${item.priceEth} ETH / share`;
+                }
+            });
+        } // Конец функции updateAllPriceLabels
+
+
+        // 3. Покупка доли (обработчик для ВСЕХ кнопок)
+        async function handleBuy(event) {
+            if (!signer || !isConnected) {
+                const buttonId = event.target.id;
+                const item = items.find(i => i.buyButtonId === buttonId);
+                setFeedbackFor(item ? item.id : null, "Wallet not connected."); 
+                return; 
+            }
+            
+            const tokenId = event.target.dataset.tokenId;
+            const item = items.find(i => i.id == tokenId); 
+
+            if (!item) {
+                 console.error("Could not find item config for tokenId:", tokenId);
+                 setFeedbackForAll("Internal error: Item configuration not found.");
+                 return; 
+            }
+
+            const amountInput = document.getElementById(item.amountInputId);
+            const buyAmount = amountInput ? amountInput.value : 1; 
+
+            if (buyAmount <= 0) {
+                setFeedbackFor(item.id, "Amount must be > 0");
+                return; 
+            }
+
+            const buyButton = document.getElementById(item.buyButtonId); 
+
+            try {
+                buyButton.disabled = true; 
+                
+                const pricePerFractionWei = ethers.parseEther(item.priceEth); 
+                const totalPriceWei = pricePerFractionWei * BigInt(buyAmount);
+
+                // --- Расчет комиссии (визуальный) ---
+                const commissionRate = 0.02; 
+                const commissionAmountWei = (totalPriceWei * BigInt(Math.round(commissionRate * 10000))) / BigInt(10000); 
+                const amountToArtisanWei = totalPriceWei - commissionAmountWei;
+                const totalEth = parseFloat(ethers.formatEther(totalPriceWei)).toFixed(6);
+                const artisanEth = parseFloat(ethers.formatEther(amountToArtisanWei)).toFixed(6);
+                const commissionEth = parseFloat(ethers.formatEther(commissionAmountWei)).toFixed(6);
+                setFeedbackFor(item.id, `Preparing: Total ${totalEth} ETH (${artisanEth} to artisan, ${commissionEth} fee)`);
+                // --- Конец расчета ---
+
+                await new Promise(resolve => setTimeout(resolve, 1500)); 
+
+                setFeedbackFor(item.id, "Waiting for MetaMask..."); 
+
+                const contractWithSigner = contract.connect(signer);
+
+                const tx = await contractWithSigner.buyFraction(item.id, buyAmount, { 
+                    value: totalPriceWei 
+                    // Мы НЕ используем gasLimit: 0, т.к. мы в Обычной Sepolia
+                });
+
+                setFeedbackFor(item.id, "Transaction sent! Waiting...");
+                await tx.wait(); 
+
+                setFeedbackFor(item.id, `Success! Bought ${buyAmount} share(s).`);
+                
+                const available = await contract.getFractionsAvailable(item.id);
+                const sharesLabel = document.getElementById(item.sharesLabelId);
+                if (sharesLabel) {
+                    sharesLabel.innerText = `${Number(available)} / ${item.totalShares} shares available`;
+                }
+                
+                buyButton.disabled = false; 
+                
+            } catch (err) {
+                console.error(`Buy error for ID ${item.id}:`, err);
+                const reason = err.reason || err.message || "Transaction failed.";
+                 if (reason.includes("insufficient funds")) {
+                     setFeedbackFor(item.id, "Error! Insufficient funds.");
+                } else if (reason.includes("Not enough fractions available")){
+                     setFeedbackFor(item.id, "Error! Not enough shares left.");
+                 } else if (err.code === 'ACTION_REJECTED' || err.code === 4001) { 
+                     setFeedbackFor(item.id, "Transaction rejected."); 
+                 }
+                 else {
+                     setFeedbackFor(item.id, `Error! ${reason.substring(0, 50)}...`); 
+                }
+                buyButton.disabled = false; 
+            }
+        } // Конец функции handleBuy
+
+        // Обновление статуса для КОНКРЕТНОГО товара
+        function setFeedbackFor(itemId, message) {
+            if (itemId === null || itemId === undefined) {
+                 setFeedbackForAll(message); 
+                 return; 
+            }
+            const item = items.find(i => i.id == itemId); // Use ==
+            if (item) {
+                const feedbackElem = document.getElementById(item.feedbackLabelId);
+                if (feedbackElem) {
+                    feedbackElem.innerHTML = `<i>${message}</i>`;
+                }
+            }
+        } // Конец функции setFeedbackFor
+        
+        // Обновление статуса для ВСЕХ товаров
+        function setFeedbackForAll(message) {
+             items.forEach(item => {
+                 const feedbackElem = document.getElementById(item.feedbackLabelId); 
+                 if (feedbackElem) {
+                    feedbackElem.innerHTML = `<i>${message}</i>`;
+                 }
+             });
+        } // Конец функции setFeedbackForAll
+
+        console.log("ShyrChain script loaded. (v5 - Final Sepolia)"); 
+
+    </script>
+</body>
+</html>
